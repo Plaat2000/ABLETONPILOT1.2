@@ -959,6 +959,9 @@ async function main() {
     console.log("  (none)        Start the MCP server");
     console.log("  --setup       Full setup wizard (install + configure + test)");
     console.log("  --install     Install Remote Script and M4L Analyzer into Ableton Live");
+    console.log("  --install-analyzer      Install only the M4L Analyzer into the User Library");
+    console.log("  --install-build-guide   Copy the M4L Analyzer build guide into the User Library");
+    console.log("  --install-miditool-build-guide Copy the MIDI Tool build guide into the User Library");
     console.log("  --uninstall   Remove Remote Script from Ableton Live");
     console.log("  --install-codex-plugin   Install the bundled Codex plugin locally");
     console.log("  --uninstall-codex-plugin Remove the locally installed Codex plugin");
@@ -972,6 +975,7 @@ async function main() {
     console.log("  LIVE_MCP_HOST          Remote Script host (default: 127.0.0.1)");
     console.log("  LIVE_MCP_PORT          Remote Script port (default: 9878)");
     console.log("  LIVEPILOT_AUTO_INSTALL Auto-install Remote Script on launch (set to 'true')");
+    console.log("  LIVEPILOT_ANALYZER_DIR Directory to copy LivePilot_Analyzer.amxd into (optional)");
     console.log("  LIVEPILOT_TCP_PORT     Override Remote Script port (Desktop Extension/MCPB)");
     console.log("  LIVEPILOT_TOOL_PROFILE Tool catalog: producer (default), composition, mixing, sampling, or full");
     return;
@@ -992,6 +996,30 @@ async function main() {
     const { installAnalyzer } = require(path.join(ROOT, "installer", "analyzer.js"));
     const analyzer = installAnalyzer();
     console.log("Analyzer + bridge installed to %s", analyzer.destination);
+    return;
+  }
+
+  // --install-analyzer
+  if (flag === "--install-analyzer") {
+    const { installAnalyzer } = require(path.join(ROOT, "installer", "analyzer.js"));
+    const analyzer = installAnalyzer();
+    console.log("Analyzer + bridge installed to %s", analyzer.destination);
+    return;
+  }
+
+  // --install-build-guide
+  if (flag === "--install-build-guide") {
+    const { installBuildGuide } = require(path.join(ROOT, "installer", "build_guide.js"));
+    const guide = installBuildGuide();
+    console.log("Build guide installed to %s", path.join(guide.destination, guide.files[0]));
+    return;
+  }
+
+  // --install-miditool-build-guide
+  if (flag === "--install-miditool-build-guide") {
+    const { installMidiToolBuildGuide } = require(path.join(ROOT, "installer", "build_guide.js"));
+    const guide = installMidiToolBuildGuide();
+    console.log("Build guide installed to %s", path.join(guide.destination, guide.files[0]));
     return;
   }
 
